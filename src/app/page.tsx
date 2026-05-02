@@ -10,8 +10,17 @@ export default function Home() {
       {/* Navigation */}
       <nav className="glass border-b border-border px-6 py-4 sticky top-0 z-50">
         <div className="container mx-auto flex items-center justify-between">
-          <Link href="/" className="text-xl font-black italic text-primary tracking-tighter">
-            RESUMEFORGE AI
+          <Link href="/" className="flex items-center gap-2 group">
+            <div className="relative w-10 h-10 overflow-hidden rounded-xl bg-primary/10 flex items-center justify-center border border-primary/20 group-hover:border-primary/40 transition-colors">
+              <img 
+                src="/logo.png" 
+                alt="ResumeForge AI Logo" 
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <span className="text-xl font-black italic text-primary tracking-tighter">
+              RESUMEFORGE AI
+            </span>
           </Link>
           <div className="flex items-center gap-6">
             <Link href="/dashboard" className="text-sm font-bold text-muted-foreground hover:text-primary transition-colors">

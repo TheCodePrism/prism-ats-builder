@@ -46,8 +46,17 @@ export default function RegisterPage() {
         className="w-full max-w-md glass p-8 rounded-3xl border border-border/50 shadow-2xl"
       >
         <div className="text-center mb-10">
-          <Link href="/" className="text-2xl font-black italic text-primary tracking-tighter mb-2 inline-block">
-            RESUMEFORGE AI
+          <Link href="/" className="flex flex-col items-center gap-4 group mb-6">
+            <div className="relative w-16 h-16 overflow-hidden rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20 group-hover:border-primary/40 transition-colors">
+              <img 
+                src="/logo.png" 
+                alt="ResumeForge AI Logo" 
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <span className="text-2xl font-black italic text-primary tracking-tighter inline-block">
+              RESUMEFORGE AI
+            </span>
           </Link>
           <h1 className="text-3xl font-bold tracking-tight">Begin Your Quest</h1>
           <p className="text-muted-foreground mt-2">Create an account to save your progress.</p>

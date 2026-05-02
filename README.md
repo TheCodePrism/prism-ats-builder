@@ -1,36 +1,92 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ⚒️ ResumeForge AI
 
-## Getting Started
+![ResumeForge AI Logo](public/logo.png)
 
-First, run the development server:
+**ResumeForge AI** is a production-grade SaaS platform designed to help job hunters "level up" their career search by creating ATS-optimized resumes. Using advanced AI-driven analysis, it quantifies impact and ensures your resume passes through automated filters and reaches human recruiters.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
+
+## ✨ Key Features
+
+- **🎯 ATS Scoring Engine**: Real-time feedback on how recruiter systems perceive your resume. Aim for a 90+ score to maximize your chances.
+- **⚡ AI Content Optimizer**: Intelligent refinement of your professional achievements. We help you quantify your impact with precision.
+- **🛡️ Solo Leveling System**: Gamify your job search. Earn XP as you improve your resume and reach higher "Hunter Levels".
+- **🎨 Premium Templates**: Modern, sleek designs that stand out while remaining highly readable by machines.
+- **🔒 Secure Authentication**: Robust security powered by NextAuth.js.
+- **📊 Semantic Analysis**: AI-powered parsing to ensure your keywords match the industry standards.
+
+---
+
+## 🚀 Tech Stack
+
+- **Frontend**: [Next.js 14+](https://nextjs.org/) (App Router), [Tailwind CSS](https://tailwindcss.com/), [Framer Motion](https://www.framer.com/motion/)
+- **Backend**: [Next.js API Routes](https://nextjs.org/docs/app/building-your-application/routing/route-handlers), [Prisma ORM](https://www.prisma.io/)
+- **Database**: [PostgreSQL](https://www.postgresql.org/)
+- **Authentication**: [NextAuth.js](https://next-auth.js.org/)
+- **State Management**: [Zustand](https://github.com/pmndrs/zustand)
+- **Validation**: [Zod](https://zod.dev/)
+- **Icons**: [Lucide React](https://lucide.dev/)
+
+---
+
+## 🛠️ Getting Started
+
+### Prerequisites
+
+- Node.js 18+
+- PostgreSQL database
+- Environment variables configured
+
+### Installation
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/your-username/resumeforge-ai.git
+   cd resumeforge-ai
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+3. **Set up Environment Variables**:
+   Create a `.env` file in the root directory and add the following:
+   ```env
+   DATABASE_URL="postgresql://user:password@localhost:5432/resumeforge"
+   NEXTAUTH_SECRET="your-secret-key"
+   NEXTAUTH_URL="http://localhost:3000"
+   ```
+
+4. **Initialize Database**:
+   ```bash
+   npx prisma generate
+   npx prisma db push
+   ```
+
+5. **Run the development server**:
+   ```bash
+   npm run dev
+   ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📖 Usage
 
-## Learn More
+1. **Sign Up**: Create your Hunter account.
+2. **Forge**: Start building your resume in the interactive builder.
+3. **Analyze**: Use the AI engine to get an ATS score and optimization tips.
+4. **Export**: Download your high-impact, machine-readable resume.
+5. **Level Up**: Watch your score improve as you refine your content.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📄 License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Built with ❤️ for Hunters by **ResumeForge AI Team**.

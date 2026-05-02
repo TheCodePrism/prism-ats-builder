@@ -19,8 +19,17 @@ export default async function DashboardPage() {
       {/* Header */}
       <header className="glass border-b border-border px-6 py-4 sticky top-0 z-50">
         <div className="container mx-auto flex items-center justify-between">
-          <Link href="/" className="text-xl font-bold tracking-tighter text-primary">
-            ResumeForge AI
+          <Link href="/" className="flex items-center gap-2 group">
+            <div className="relative w-8 h-8 overflow-hidden rounded-lg bg-primary/10 flex items-center justify-center border border-primary/20 group-hover:border-primary/40 transition-colors">
+              <img 
+                src="/logo.png" 
+                alt="ResumeForge AI Logo" 
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <span className="text-xl font-bold tracking-tighter text-primary">
+              ResumeForge AI
+            </span>
           </Link>
           <div className="flex items-center gap-4">
             <div className="flex flex-col items-end mr-2">

@@ -11,6 +11,9 @@ const outfit = Outfit({
 export const metadata: Metadata = {
   title: "ResumeForge AI | Build ATS-Optimized Resumes",
   description: "Level up your career with AI-powered, ATS-optimized resumes.",
+  icons: {
+    icon: "/logo.png",
+  },
 };
 
 export default function RootLayout({
