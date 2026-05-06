@@ -1,17 +1,21 @@
 import OpenAI from 'openai'
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-})
+// Helper to get OpenAI instance
+const getOpenAI = (userApiKey?: string) => {
+  const key = userApiKey || process.env.OPENAI_API_KEY
+  if (!key) {
+    throw new Error('No OpenAI API key found. Please add one in settings or contact support.')
+  }
+  return new OpenAI({ apiKey: key })
+}
 
 export async function optimizeResumeContent(
   currentContent: string,
   targetJobDescription: string,
-  missingKeywords: string[]
+  missingKeywords: string,
+  userApiKey?: string
 ) {
-  if (!process.env.OPENAI_API_KEY) {
-    throw new Error('OpenAI API Key is missing. Please add it to your .env file.')
-  }
+  const openai = getOpenAI(userApiKey)
 
   const prompt = `
     You are an expert resume optimizer and recruiter.
@@ -20,7 +24,7 @@ export async function optimizeResumeContent(
     ${targetJobDescription}
     
     Missing Critical Keywords:
-    ${missingKeywords.join(', ')}
+    ${missingKeywords}
     
     Current Content to Optimize:
     ${currentContent}
@@ -35,7 +39,8 @@ export async function optimizeResumeContent(
   `
 
   const response = await openai.chat.completions.create({
-    model: 'gpt-4o-mini',
+    // Use gpt-4o for better results if user provides key, otherwise gpt-4o-mini
+    model: userApiKey ? 'gpt-4o' : 'gpt-4o-mini',
     messages: [
       { role: 'system', content: 'You are a professional resume writer specializing in ATS optimization.' },
       { role: 'user', content: prompt }
@@ -46,8 +51,8 @@ export async function optimizeResumeContent(
   return response.choices[0].message.content
 }
 
-export async function analyzeResumeAI(resumeData: any, jobDescription: string) {
-  if (!process.env.OPENAI_API_KEY) return null
+export async function analyzeResumeAI(resumeData: any, jobDescription: string, userApiKey?: string) {
+  const openai = getOpenAI(userApiKey)
 
   const prompt = `
     Analyze this resume against the job description.
@@ -65,7 +70,7 @@ export async function analyzeResumeAI(resumeData: any, jobDescription: string) {
   `
 
   const response = await openai.chat.completions.create({
-    model: 'gpt-4o-mini',
+    model: userApiKey ? 'gpt-4o' : 'gpt-4o-mini',
     response_format: { type: 'json_object' },
     messages: [
       { role: 'system', content: 'You are an elite recruiter specializing in semantic resume analysis. Return JSON only.' },

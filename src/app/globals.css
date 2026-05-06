@@ -39,3 +39,36 @@
 .card-hover {
   @apply transition-all duration-300 hover:shadow-2xl hover:-translate-y-1;
 }
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 8s ease infinite;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.bg-grid {
+  background-size: 50px 50px;
+  background-image: 
+    linear-gradient(to right, oklch(0.5 0.1 250 / 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, oklch(0.5 0.1 250 / 0.03) 1px, transparent 1px);
+  mask-image: radial-gradient(ellipse at center, black 40%, transparent 100%);
+}
+
+.text-glow {
+  text-shadow: 0 0 20px rgba(var(--color-primary), 0.3);
+}

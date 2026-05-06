@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
 import { optimizeContentAction } from '@/app/actions/ai'
 import { calculateATSScore } from '@/lib/ats-engine'
+import { toast } from 'sonner'
 
 export default function ResumeForm() {
   const { 
@@ -39,7 +40,7 @@ export default function ResumeForm() {
 
   const handleOptimize = async (id: string, currentContent: string) => {
     if (!data.jobDescription) {
-      alert('Please provide a Job Description first to optimize content.')
+      toast.error('Please provide a Job Description first to optimize content.')
       return
     }
 
@@ -50,8 +51,9 @@ export default function ResumeForm() {
     
     if (result.success && result.optimized) {
       updateExperience(id, { description: result.optimized })
+      toast.success('Content optimized successfully!')
     } else {
-      alert(result.error)
+      toast.error(result.error || 'Failed to optimize content')
     }
     setOptimizingId(null)
   }

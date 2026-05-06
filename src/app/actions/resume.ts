@@ -20,25 +20,32 @@ export async function saveResume(userId: string, data: ResumeData, resumeId?: st
     // Validate data with Zod
     const validatedData = resumeDataSchema.parse(data)
 
-    const isExisting = resumeId && resumeId !== 'new'
+    const isExisting = resumeId && resumeId !== 'new' && resumeId !== 'undefined'
 
-    const resume = await prisma.resume.upsert({
-      where: {
-        id: isExisting ? resumeId : 'placeholder-id',
-      },
-      update: {
-        data: JSON.stringify(validatedData),
-        atsScore: validatedData.atsScore || 0,
-      },
-      create: {
-        userId,
-        data: JSON.stringify(validatedData),
-        atsScore: validatedData.atsScore || 0,
-        title: validatedData.personalInfo.fullName 
-          ? `${validatedData.personalInfo.fullName}'s Resume` 
-          : `Resume ${new Date().toLocaleDateString()}`,
-      },
-    })
+    let resume
+    if (isExisting) {
+      resume = await prisma.resume.update({
+        where: { id: resumeId },
+        data: {
+          data: JSON.stringify(validatedData),
+          atsScore: validatedData.atsScore || 0,
+          title: validatedData.personalInfo.fullName 
+            ? `${validatedData.personalInfo.fullName}'s Resume` 
+            : `Resume ${new Date().toLocaleDateString()}`,
+        },
+      })
+    } else {
+      resume = await prisma.resume.create({
+        data: {
+          userId,
+          data: JSON.stringify(validatedData),
+          atsScore: validatedData.atsScore || 0,
+          title: validatedData.personalInfo.fullName 
+            ? `${validatedData.personalInfo.fullName}'s Resume` 
+            : `Resume ${new Date().toLocaleDateString()}`,
+        },
+      })
+    }
 
     revalidatePath('/dashboard')
     revalidatePath('/builder')

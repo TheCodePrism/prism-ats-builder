@@ -1,9 +1,12 @@
 import { getResumes, Resume } from '@/app/actions/resume'
-import { Plus, FileText, Trash2, Edit3, Trophy, ChevronRight, LogOut } from 'lucide-react'
+import { Plus, FileText, Edit3, Trophy, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 import { redirect } from 'next/navigation'
+import DeleteButton from '@/components/dashboard/DeleteButton'
+import AISettings from '@/components/dashboard/AISettings'
+import { getUserSettings } from '@/app/actions/user'
 
 export default async function DashboardPage() {
   const session = await getServerSession(authOptions)
@@ -13,6 +16,7 @@ export default async function DashboardPage() {
   }
 
   const resumes = await getResumes(session.user.id)
+  const userSettings = await getUserSettings()
 
   return (
     <div className="min-h-screen bg-background">
@@ -63,10 +67,17 @@ export default async function DashboardPage() {
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          <StatCard title="Total Resumes" value={resumes.length.toString()} icon={<FileText className="w-5 h-5" />} />
-          <StatCard title="Highest ATS Score" value={(resumes.length > 0 ? Math.max(...resumes.map(r => r.atsScore)) : 0) + '%'} icon={<Trophy className="w-5 h-5" />} />
-          <StatCard title="Global Rank" value="Top 15%" icon={<ChevronRight className="w-5 h-5" />} />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
+          <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <StatCard title="Total Resumes" value={resumes.length.toString()} icon={<FileText className="w-5 h-5" />} />
+            <StatCard title="Highest ATS Score" value={(resumes.length > 0 ? Math.max(...resumes.map(r => r.atsScore)) : 0) + '%'} icon={<Trophy className="w-5 h-5" />} />
+            <div className="md:col-span-2">
+              <StatCard title="Global Rank" value="Top 15%" icon={<ChevronRight className="w-5 h-5" />} />
+            </div>
+          </div>
+          <div className="lg:col-span-1">
+            <AISettings initialKey={userSettings?.openaiKey || null} initialUsage={userSettings?.aiUsage || 0} />
+          </div>
         </div>
 
         {/* Resumes List */}
@@ -116,9 +127,7 @@ function ResumeCard({ resume }: { resume: Resume }) {
   return (
     <div className="glass group p-6 rounded-3xl border border-border/50 hover:border-primary/30 transition-all card-hover relative overflow-hidden">
       <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-all">
-        <button className="p-2 hover:bg-red-50 text-muted-foreground hover:text-red-500 rounded-lg transition-all">
-          <Trash2 className="w-4 h-4" />
-        </button>
+        <DeleteButton id={resume.id} />
       </div>
       
       <div className="mb-6">

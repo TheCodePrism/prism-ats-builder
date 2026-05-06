@@ -4,6 +4,8 @@ import { motion } from 'framer-motion'
 import { LogIn, Mail, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
+import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
 const GithubIcon = ({ className }: { className?: string }) => (
   <svg
@@ -24,14 +26,34 @@ const GithubIcon = ({ className }: { className?: string }) => (
 
 export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false)
+  const router = useRouter()
+  const [error, setError] = useState<string | null>(null)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsLoading(true)
-    // Simulate login
-    setTimeout(() => {
-      window.location.href = '/dashboard'
-    }, 1500)
+    setError(null)
+
+    const formData = new FormData(e.currentTarget)
+    const email = formData.get('email')
+    const password = formData.get('password')
+
+    const result = await signIn('credentials', {
+      email,
+      password,
+      redirect: false,
+    })
+
+    if (result?.error) {
+      setError('Invalid email or password')
+      setIsLoading(false)
+    } else {
+      router.push('/dashboard')
+    }
+  }
+
+  const handleSocialLogin = (provider: string) => {
+    signIn(provider, { callbackUrl: '/dashboard' })
   }
 
   return (
@@ -63,12 +85,19 @@ export default function LoginPage() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          {error && (
+            <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-500 text-sm font-medium">
+              {error}
+            </div>
+          )}
+
           <div>
             <label className="block text-sm font-bold mb-2 uppercase tracking-widest text-muted-foreground">Email Address</label>
             <div className="relative">
               <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <input
                 type="email"
+                name="email"
                 required
                 className="w-full bg-background border border-border rounded-xl py-3 pl-10 pr-4 focus:ring-2 focus:ring-primary/20 outline-none transition-all"
                 placeholder="hunter@example.com"
@@ -80,6 +109,7 @@ export default function LoginPage() {
             <label className="block text-sm font-bold mb-2 uppercase tracking-widest text-muted-foreground">Password</label>
             <input
               type="password"
+              name="password"
               required
               className="w-full bg-background border border-border rounded-xl py-3 px-4 focus:ring-2 focus:ring-primary/20 outline-none transition-all"
               placeholder="••••••••"
@@ -113,11 +143,17 @@ export default function LoginPage() {
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            <button className="flex items-center justify-center gap-2 py-3 bg-secondary text-secondary-foreground rounded-xl hover:bg-muted transition-all border border-border/50">
+            <button 
+              onClick={() => handleSocialLogin('github')}
+              className="flex items-center justify-center gap-2 py-3 bg-secondary text-secondary-foreground rounded-xl hover:bg-muted transition-all border border-border/50"
+            >
               <GithubIcon className="w-5 h-5" />
               Github
             </button>
-            <button className="flex items-center justify-center gap-2 py-3 bg-secondary text-secondary-foreground rounded-xl hover:bg-muted transition-all border border-border/50">
+            <button 
+              onClick={() => handleSocialLogin('google')}
+              className="flex items-center justify-center gap-2 py-3 bg-secondary text-secondary-foreground rounded-xl hover:bg-muted transition-all border border-border/50"
+            >
               <LogIn className="w-5 h-5" />
               Google
             </button>

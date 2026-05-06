@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 // NextAuth Models
@@ -41,12 +41,21 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   password      String?   // Added for credentials login
+  openaiKey     String?   // User's own OpenAI API key
+  aiUsage       Int       @default(0) // Track free AI uses
   image         String?
   accounts      Account[]
   sessions      Session[]
   resumes       Resume[]
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+}
+
+model GuestUsage {
+  id        String   @id @default(cuid())
+  ip        String   @unique
+  count     Int      @default(0)
+  updatedAt DateTime @updatedAt
 }
 
 model VerificationToken {

@@ -36,6 +36,11 @@ export const resumeDataSchema = z.object({
   jobDescription: z.string().optional(),
   atsScore: z.number().min(0).max(100).optional(),
   template: z.enum(['classic', 'modern', 'minimal']).default('classic'),
+  settings: z.object({
+    primaryColor: z.string().default('#0A84FF'),
+    fontFamily: z.string().default('Outfit'),
+    fontSize: z.number().min(8).max(20).default(12),
+  }).optional(),
 })
 
 export type ValidatedResumeData = z.infer<typeof resumeDataSchema>

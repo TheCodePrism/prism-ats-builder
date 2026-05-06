@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-grid">
       {/* Navigation */}
       <nav className="glass border-b border-border px-6 py-4 sticky top-0 z-50">
         <div className="container mx-auto flex items-center justify-between">
@@ -41,41 +41,59 @@ export default function Home() {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative py-20 lg:py-32 overflow-hidden">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 opacity-30">
-            <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary blur-[120px] rounded-full" />
-            <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-accent blur-[120px] rounded-full" />
+        <section className="relative py-24 lg:py-40 overflow-hidden">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10">
+            <motion.div 
+              animate={{ 
+                scale: [1, 1.2, 1],
+                opacity: [0.3, 0.5, 0.3] 
+              }}
+              transition={{ duration: 10, repeat: Infinity }}
+              className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary/20 blur-[120px] rounded-full" 
+            />
+            <motion.div 
+              animate={{ 
+                scale: [1.2, 1, 1.2],
+                opacity: [0.2, 0.4, 0.2] 
+              }}
+              transition={{ duration: 12, repeat: Infinity }}
+              className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-accent/20 blur-[120px] rounded-full" 
+            />
           </div>
 
-          <div className="container px-4 mx-auto text-center">
+          <div className="container px-4 mx-auto text-center relative">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
             >
-              <span className="inline-block px-4 py-1.5 mb-6 text-sm font-medium tracking-wider text-primary uppercase bg-primary/10 rounded-full border border-primary/20">
-                The AI Finisher is Here
+              <span className="inline-flex items-center gap-2 px-4 py-2 mb-8 text-xs font-black tracking-[0.2em] text-primary uppercase bg-primary/5 rounded-full border border-primary/20 backdrop-blur-sm">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                </span>
+                The AI Resume Finisher is Here
               </span>
-              <h1 className="text-5xl lg:text-7xl font-bold tracking-tight mb-6 bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/70 leading-[1.1]">
-                Forge Your Future with <br />
-                <span className="text-primary italic">ResumeForge AI</span>
+              <h1 className="text-6xl lg:text-8xl font-black tracking-tighter mb-8 leading-[0.9] uppercase italic">
+                Forge Your <br />
+                <span className="text-primary bg-clip-text text-transparent bg-gradient-to-r from-primary via-accent to-primary animate-gradient">Future</span>
               </h1>
-              <p className="max-w-2xl mx-auto text-lg lg:text-xl text-muted-foreground mb-10">
-                Build ATS-optimized resumes that actually get read. Use our AI engine to level up your content and score like a top recruiter.
+              <p className="max-w-2xl mx-auto text-lg lg:text-2xl text-muted-foreground mb-12 font-medium">
+                Build <span className="text-foreground font-bold">ATS-Optimized</span> resumes that recruiters actually want to read. Level up your career quest with our deep AI engine.
               </p>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
                 <Link
                   href="/builder"
-                  className="w-full sm:w-auto px-10 py-5 bg-primary text-primary-foreground font-black tracking-tighter rounded-xl shadow-xl shadow-primary/30 hover:bg-primary/90 transition-all flex items-center justify-center gap-2 group text-lg"
+                  className="w-full sm:w-auto px-12 py-6 bg-primary text-primary-foreground font-black tracking-tighter rounded-2xl shadow-2xl shadow-primary/40 hover:bg-primary/90 transition-all flex items-center justify-center gap-3 group text-xl italic"
                 >
-                  START BUILDING
-                  <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  START YOUR QUEST
+                  <ChevronRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
                 </Link>
                 <Link 
-                  href="/login"
-                  className="w-full sm:w-auto px-10 py-5 bg-secondary text-secondary-foreground font-black tracking-tighter rounded-xl hover:bg-secondary/80 transition-all border border-border/50 text-lg"
+                  href="/dashboard"
+                  className="w-full sm:w-auto px-12 py-6 bg-background/50 backdrop-blur-md text-foreground font-black tracking-tighter rounded-2xl hover:bg-secondary/50 transition-all border border-border/50 text-xl italic"
                 >
-                  VIEW DASHBOARD
+                  DASHBOARD
                 </Link>
               </div>
             </motion.div>
@@ -83,23 +101,26 @@ export default function Home() {
         </section>
 
         {/* Features Grid */}
-        <section className="py-20 bg-muted/30 relative">
+        <section className="py-32 relative">
           <div className="container px-4 mx-auto">
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-3 gap-10">
               <FeatureCard
-                icon={<Target className="w-8 h-8 text-primary" />}
-                title="ATS Scoring Engine"
-                description="Real-time feedback on how recruiter systems see your resume. Score 90+ to win."
+                index={0}
+                icon={<Target className="w-10 h-10 text-primary" />}
+                title="ATS Scoring"
+                description="Real-time feedback on how recruiter systems see your resume. Hit the S-Rank score to win the shortlist."
               />
               <FeatureCard
-                icon={<Zap className="w-8 h-8 text-accent" />}
-                title="AI Content Optimizer"
-                description="Not just generation. We refine your achievements to quantify your impact perfectly."
+                index={1}
+                icon={<Zap className="w-10 h-10 text-accent" />}
+                title="AI Optimizer"
+                description="Our engine rewrites your bullets to quantify impact and inject missing keywords naturally."
               />
               <FeatureCard
-                icon={<Star className="w-8 h-8 text-yellow-500" />}
-                title="Solo Leveling System"
-                description="Gamify your career hunt. Earn XP as you improve your resume and reach Level 10."
+                index={2}
+                icon={<Star className="w-10 h-10 text-yellow-500" />}
+                title="Solo Leveling"
+                description="Gamify your career hunt. Gain XP, level up your profile, and reach the top 1% of candidates."
               />
             </div>
           </div>
@@ -118,15 +139,24 @@ export default function Home() {
   )
 }
 
-function FeatureCard({ icon, title, description }: { icon: React.ReactNode, title: string, description: string }) {
+function FeatureCard({ icon, title, description, index }: { icon: React.ReactNode, title: string, description: string, index: number }) {
   return (
     <motion.div
-      whileHover={{ y: -5 }}
-      className="p-8 glass rounded-3xl border border-border/50 hover:border-primary/30 transition-all"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.1, duration: 0.5 }}
+      whileHover={{ y: -10, scale: 1.02 }}
+      className="p-10 glass rounded-[3rem] border border-border/50 hover:border-primary/40 transition-all card-hover relative overflow-hidden group"
     >
-      <div className="mb-4">{icon}</div>
-      <h3 className="text-xl font-bold mb-2 uppercase tracking-tight italic">{title}</h3>
-      <p className="text-muted-foreground leading-relaxed">{description}</p>
+      <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -mr-16 -mt-16 blur-3xl group-hover:bg-primary/10 transition-colors" />
+      <div className="mb-6 relative">
+        <div className="w-16 h-16 bg-background rounded-2xl flex items-center justify-center shadow-inner border border-border group-hover:border-primary/30 transition-colors">
+          {icon}
+        </div>
+      </div>
+      <h3 className="text-2xl font-black mb-4 uppercase tracking-tighter italic group-hover:text-primary transition-colors">{title}</h3>
+      <p className="text-muted-foreground leading-relaxed text-lg">{description}</p>
     </motion.div>
   )
 }

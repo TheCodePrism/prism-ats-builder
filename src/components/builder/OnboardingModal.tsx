@@ -94,9 +94,10 @@ export default function OnboardingModal({ isOpen, onClose }: { isOpen: boolean, 
               </div>
               <h2 className="text-3xl font-black italic uppercase tracking-tight">Pick Your Armor</h2>
               <p className="text-muted-foreground">Choose a starting template. You can always change this later.</p>
-              <div className="grid grid-cols-2 gap-4">
-                <TemplateOption label="Classic ATS" isActive={data.template === 'classic'} onClick={() => setTemplate('classic')} />
-                <TemplateOption label="Modern Sidebar" isActive={data.template === 'modern'} onClick={() => setTemplate('modern')} />
+              <div className="grid grid-cols-3 gap-4">
+                <TemplateOption label="Classic" isActive={data.template === 'classic'} onClick={() => setTemplate('classic')} />
+                <TemplateOption label="Modern" isActive={data.template === 'modern'} onClick={() => setTemplate('modern')} />
+                <TemplateOption label="Minimal" isActive={data.template === 'minimal'} onClick={() => setTemplate('minimal')} />
               </div>
               <button onClick={onClose} className="w-full py-4 bg-primary text-primary-foreground font-bold rounded-xl flex items-center justify-center gap-2 group">
                 ENTER THE FORGE <Rocket className="w-5 h-5 group-hover:-translate-y-1 transition-transform" />

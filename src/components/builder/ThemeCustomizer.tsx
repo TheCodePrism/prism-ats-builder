@@ -1,7 +1,7 @@
 'use client'
 
 import { useResumeStore } from '@/store/useResumeStore'
-import { Type, Palette, Type as FontIcon } from 'lucide-react'
+import { Type, Palette, Type as FontIcon, Layout } from 'lucide-react'
 
 export default function ThemeCustomizer() {
   const { data, updateSettings } = useResumeStore()
@@ -23,6 +23,7 @@ export default function ThemeCustomizer() {
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-300">
+
       <div>
         <h3 className="text-sm font-bold uppercase tracking-widest text-muted-foreground mb-4 flex items-center gap-2">
           <Palette className="w-4 h-4" />

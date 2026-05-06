@@ -6,6 +6,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Trophy, AlertCircle, CheckCircle2, Sparkles, Loader2, ListChecks, Lightbulb } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { analyzeResumeAction } from '@/app/actions/ai'
+import LevelSystem from './LevelSystem'
+import { toast } from 'sonner'
 
 export default function ScoreCard() {
   const { data, setAtsScore } = useResumeStore()
@@ -22,7 +24,7 @@ export default function ScoreCard() {
 
   const handleAIAnalysis = async () => {
     if (!data.jobDescription) {
-      alert('Provide a Job Description for deep AI analysis.')
+      toast.error('Provide a Job Description for deep AI analysis.')
       return
     }
     setIsAnalyzing(true)
@@ -33,43 +35,13 @@ export default function ScoreCard() {
     setIsAnalyzing(false)
   }
 
-  const getLevel = (score: number) => {
-    if (score < 30) return 1
-    if (score < 50) return 2
-    if (score < 70) return 3
-    if (score < 85) return 4
-    return 5
-  }
-
-  const level = getLevel(results.score)
 
   return (
     <div className="flex flex-col gap-6">
       <div className="glass p-6 rounded-3xl border border-primary/20 bg-primary/5">
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h3 className="text-sm font-bold text-primary uppercase tracking-widest mb-1">Current Level</h3>
-            <p className="text-3xl font-black italic">LEVEL {level}</p>
-          </div>
-          <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20">
-            <Trophy className="w-8 h-8 text-primary" />
-          </div>
-        </div>
-
-        {/* XP Bar */}
-        <div className="mb-6">
-          <div className="flex justify-between text-sm font-bold mb-2">
-            <span>ATS SCORE</span>
-            <span className="text-primary italic">{results.score}%</span>
-          </div>
-          <div className="h-4 bg-muted rounded-full overflow-hidden border border-border/50">
-            <motion.div
-              initial={{ width: 0 }}
-              animate={{ width: `${results.score}%` }}
-              className="h-full bg-gradient-to-r from-primary to-accent"
-            />
-          </div>
-        </div>
+        <LevelSystem score={results.score} />
+        
+        <div className="my-6 border-t border-border/50" />
 
         {/* AI Audit Button */}
         <button

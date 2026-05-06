@@ -3,7 +3,7 @@
 import ResumeForm from '@/components/builder/ResumeForm'
 import ResumePreview from '@/components/builder/ResumePreview'
 import ScoreCard from '@/components/builder/ScoreCard'
-import { Download, ChevronLeft, Target, Save, Check, Layout, UserCircle, Rocket, Palette } from 'lucide-react'
+import { Download, ChevronLeft, Target, Save, Check, Layout, Rocket, Palette } from 'lucide-react'
 import Link from 'next/link'
 import { useResumeStore } from '@/store/useResumeStore'
 import { PDFDownloadLink } from '@react-pdf/renderer'
@@ -14,6 +14,8 @@ import { useSearchParams } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import OnboardingModal from '@/components/builder/OnboardingModal'
 import ThemeCustomizer from '@/components/builder/ThemeCustomizer'
+import { toast } from 'sonner'
+import AIUsageBadge from '@/components/builder/AIUsageBadge'
 
 export default function BuilderPage() {
   const { data, updateJobDescription, setResumeData, resetResume, setTemplate } = useResumeStore()
@@ -23,7 +25,7 @@ export default function BuilderPage() {
   const [showTemplates, setShowTemplates] = useState(false)
   const [showOnboarding, setShowOnboarding] = useState(false)
   const [isPending, startTransition] = useTransition()
-  const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error' | 'unauthorized'>('idle')
+  const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
   const searchParams = useSearchParams()
   const resumeId = searchParams.get('id')
 
@@ -48,20 +50,20 @@ export default function BuilderPage() {
 
   const handleSave = () => {
     if (!session || !session.user) {
-      setSaveStatus('unauthorized')
-      setTimeout(() => setSaveStatus('idle'), 3000)
+      toast.error('Please sign in to save your resume.')
       return
     }
 
     setSaveStatus('saving')
     startTransition(async () => {
-      // @ts-ignore
       const result = await saveResume(session.user.id, data, resumeId || undefined)
       if (result.success) {
         setSaveStatus('saved')
+        toast.success('Resume saved successfully!')
         setTimeout(() => setSaveStatus('idle'), 3000)
       } else {
         setSaveStatus('error')
+        toast.error(result.error || 'Failed to save resume')
         setTimeout(() => setSaveStatus('idle'), 3000)
       }
     })
@@ -92,6 +94,8 @@ export default function BuilderPage() {
               <span className="hidden md:inline">Guided Start</span>
             </button>
             
+            <AIUsageBadge />
+
             <button 
               onClick={() => { setShowTemplates(!showTemplates); setShowJD(false); }}
               className={`px-4 py-2 text-sm font-semibold rounded-lg flex items-center gap-2 transition-all ${showTemplates ? 'bg-primary/10 text-primary' : 'hover:bg-muted text-foreground'}`}
@@ -110,24 +114,16 @@ export default function BuilderPage() {
             <button 
               onClick={handleSave}
               disabled={saveStatus === 'saving'}
-              className={`px-4 py-2 rounded-lg transition-all flex items-center gap-2 text-sm font-semibold ${saveStatus === 'unauthorized' ? 'bg-amber-500/10 text-amber-600 border border-amber-500/20' : 'hover:bg-muted text-foreground'}`}
+              className="px-4 py-2 rounded-lg transition-all flex items-center gap-2 text-sm font-semibold hover:bg-muted text-foreground"
             >
               {saveStatus === 'saving' ? (
                 <span className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin" />
               ) : saveStatus === 'saved' ? (
                 <Check className="w-4 h-4 text-green-500" />
-              ) : saveStatus === 'unauthorized' ? (
-                <div className="flex items-center gap-2">
-                  <UserCircle className="w-4 h-4" />
-                  Sign in to Sync
-                </div>
               ) : (
-                <div className="flex items-center gap-2">
-                  <Save className="w-4 h-4" />
-                  Save Draft
-                </div>
+                <Save className="w-4 h-4" />
               )}
-              {saveStatus === 'saved' && 'Saved'}
+              {saveStatus === 'saved' ? 'Saved!' : saveStatus === 'saving' ? 'Saving...' : 'Save Draft'}
             </button>
             
             {isMounted && (
@@ -135,8 +131,7 @@ export default function BuilderPage() {
                 document={<ResumePDF data={data} />}
                 fileName={`${data.personalInfo.fullName || 'resume'}.pdf`}
               >
-                {/* @ts-ignore */}
-                {({ loading }) => (
+                {({ loading }: { loading: boolean }) => (
                   <button 
                     disabled={loading}
                     className="px-4 py-2 bg-primary text-primary-foreground text-sm font-semibold rounded-lg flex items-center gap-2 shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all disabled:opacity-50"

@@ -1,5 +1,11 @@
 import { ResumeData } from '@/store/useResumeStore'
-import { optimizeResumeContent } from './openai' // We can reuse the openai logic or add new ones
+
+const COMMON_WORDS = new Set([
+  'this', 'that', 'with', 'from', 'your', 'have', 'been', 'were', 'also', 'their',
+  'which', 'will', 'about', 'would', 'there', 'some', 'could', 'other', 'them',
+  'then', 'than', 'into', 'only', 'over', 'also', 'back', 'after', 'work', 'experience',
+  'skills', 'ability', 'knowledge', 'preferred', 'required', 'years', 'plus', 'degree'
+])
 
 export interface ATSAnalysis {
   score: number
@@ -50,12 +56,10 @@ export function calculateATSScore(resume: ResumeData, jobDescription: string): A
     score: totalScore,
     matches,
     missing: missing.slice(0, 10),
+    aiAnalysis: {
+      successCriteria: [], // Will be populated by AI
+      impactScore: Math.round(completenessScore * 3.33), // Local estimate
+      suggestions: missing.length > 0 ? [`Add keywords: ${missing.slice(0, 3).join(', ')}`] : []
+    }
   }
 }
-
-const COMMON_WORDS = new Set([
-  'this', 'that', 'with', 'from', 'your', 'have', 'been', 'were', 'also', 'their',
-  'which', 'will', 'about', 'would', 'there', 'some', 'could', 'other', 'them',
-  'then', 'than', 'into', 'only', 'over', 'also', 'back', 'after', 'work', 'experience',
-  'skills', 'ability', 'knowledge', 'preferred', 'required', 'years', 'plus', 'degree'
-])
