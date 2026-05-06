@@ -10,8 +10,8 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "ResumeForge AI | Build ATS-Optimized Resumes",
-  description: "Level up your career with AI-powered, ATS-optimized resumes.",
+  title: "Prism Resume Builder | ATS-Optimized Resumes",
+  description: "ATS-Optimized Resumes. Where your career spectrum shines.",
   icons: {
     icon: "/logo.png",
   },

@@ -14,12 +14,12 @@ export default function Home() {
             <div className="relative w-10 h-10 overflow-hidden rounded-xl bg-primary/10 flex items-center justify-center border border-primary/20 group-hover:border-primary/40 transition-colors">
               <img 
                 src="/logo.png" 
-                alt="ResumeForge AI Logo" 
+                alt="Prism Logo" 
                 className="w-full h-full object-cover"
               />
             </div>
-            <span className="text-xl font-black italic text-primary tracking-tighter">
-              RESUMEFORGE AI
+            <span className="text-xl font-black italic tracking-tighter bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+              PRISM
             </span>
           </Link>
           <div className="flex items-center gap-6">
@@ -72,14 +72,14 @@ export default function Home() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
                 </span>
-                The AI Resume Finisher is Here
+                The AI Resume Finisher by Prism
               </span>
               <h1 className="text-6xl lg:text-8xl font-black tracking-tighter mb-8 leading-[0.9] uppercase italic">
-                Forge Your <br />
-                <span className="text-primary bg-clip-text text-transparent bg-gradient-to-r from-primary via-accent to-primary animate-gradient">Future</span>
+                Illuminate Your <br />
+                <span className="prism-gradient animate-prism">Career</span>
               </h1>
               <p className="max-w-2xl mx-auto text-lg lg:text-2xl text-muted-foreground mb-12 font-medium">
-                Build <span className="text-foreground font-bold">ATS-Optimized</span> resumes that recruiters actually want to read. Level up your career quest with our deep AI engine.
+                <span className="text-foreground font-bold">ATS-Optimized Resumes.</span> Where your career spectrum shines.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
                 <Link
@@ -131,7 +131,7 @@ export default function Home() {
       <footer className="py-12 border-t border-border bg-background">
         <div className="container mx-auto px-4 text-center">
           <p className="text-sm text-muted-foreground">
-            © 2026 ResumeForge AI. All rights reserved. Built for Hunters.
+            © 2026 Prism Resume Builder. All rights reserved.
           </p>
         </div>
       </footer>

@@ -1,92 +1,64 @@
-# ⚒️ ResumeForge AI
+# Prism ATS Builder
 
-![ResumeForge AI Logo](public/logo.png)
+> **ATS-Optimized Resumes. Where your career spectrum shines.**
 
-**ResumeForge AI** is a production-grade SaaS platform designed to help job hunters "level up" their career search by creating ATS-optimized resumes. Using advanced AI-driven analysis, it quantifies impact and ensures your resume passes through automated filters and reaches human recruiters.
+Prism ATS Builder is an open-source, AI-powered resume builder designed to help job seekers crack the Applicant Tracking System (ATS). With real-time scoring, "Solo Leveling" gamification, and deep AI bullet optimization, Prism ensures your resume lands on the recruiter's desk.
 
----
+![Prism Banner](./public/logo.png)
 
-## ✨ Key Features
+## ✨ Core Features
+- **ATS Scoring Engine**: Get real-time feedback on how recruiter algorithms read your resume. 
+- **AI Bullet Optimization**: Rewrite your impact statements using the "Platform AI" (GPT-4o Mini) or your own API key (GPT-4o).
+- **Gamified Leveling**: Gain XP and level up your profile from Bronze to S-Rank.
+- **Dynamic PDF Export**: Export pixel-perfect resumes instantly using `@react-pdf/renderer`.
+- **Bring Your Own AI (BYOAI)**: Free users get quota-limited access to the platform AI, but you can unlock unlimited S-Rank optimizations by bringing your own OpenAI API key.
 
-- **🎯 ATS Scoring Engine**: Real-time feedback on how recruiter systems perceive your resume. Aim for a 90+ score to maximize your chances.
-- **⚡ AI Content Optimizer**: Intelligent refinement of your professional achievements. We help you quantify your impact with precision.
-- **🛡️ Solo Leveling System**: Gamify your job search. Earn XP as you improve your resume and reach higher "Hunter Levels".
-- **🎨 Premium Templates**: Modern, sleek designs that stand out while remaining highly readable by machines.
-- **🔒 Secure Authentication**: Robust security powered by NextAuth.js.
-- **📊 Semantic Analysis**: AI-powered parsing to ensure your keywords match the industry standards.
-
----
-
-## 🚀 Tech Stack
-
-- **Frontend**: [Next.js 14+](https://nextjs.org/) (App Router), [Tailwind CSS](https://tailwindcss.com/), [Framer Motion](https://www.framer.com/motion/)
-- **Backend**: [Next.js API Routes](https://nextjs.org/docs/app/building-your-application/routing/route-handlers), [Prisma ORM](https://www.prisma.io/)
-- **Database**: [PostgreSQL](https://www.postgresql.org/)
-- **Authentication**: [NextAuth.js](https://next-auth.js.org/)
-- **State Management**: [Zustand](https://github.com/pmndrs/zustand)
-- **Validation**: [Zod](https://zod.dev/)
-- **Icons**: [Lucide React](https://lucide.dev/)
-
----
-
-## 🛠️ Getting Started
+## 🚀 Quick Start (Local Development)
 
 ### Prerequisites
-
 - Node.js 18+
-- PostgreSQL database
-- Environment variables configured
+- PostgreSQL Database (e.g., Railway or Supabase)
+- OpenAI API Key
 
 ### Installation
 
-1. **Clone the repository**:
+1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-username/resumeforge-ai.git
-   cd resumeforge-ai
+   git clone https://github.com/YourUsername/prism-resume-builder.git
+   cd prism-resume-builder
    ```
 
-2. **Install dependencies**:
+2. **Install dependencies:**
    ```bash
    npm install
    ```
 
-3. **Set up Environment Variables**:
-   Create a `.env` file in the root directory and add the following:
-   ```env
-   DATABASE_URL="postgresql://user:password@localhost:5432/resumeforge"
-   NEXTAUTH_SECRET="your-secret-key"
-   NEXTAUTH_URL="http://localhost:3000"
+3. **Set up Environment Variables:**
+   Copy the example environment file and fill in your details:
+   ```bash
+   cp .env.example .env
    ```
+   *Note: You must provide a valid `DATABASE_URL`, `NEXTAUTH_SECRET`, and `OPENAI_API_KEY` for the application to run.*
 
-4. **Initialize Database**:
+4. **Initialize Database:**
    ```bash
    npx prisma generate
    npx prisma db push
    ```
 
-5. **Run the development server**:
+5. **Start the Development Server:**
    ```bash
-   npm run dev
+   npm run dev --turbo
    ```
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Tech Stack
+- **Framework**: Next.js 15 (App Router)
+- **Styling**: Tailwind CSS, Framer Motion
+- **Database**: PostgreSQL via Prisma ORM
+- **Auth**: NextAuth.js
+- **AI**: OpenAI API
+- **Export**: React-PDF
 
----
-
-## 📖 Usage
-
-1. **Sign Up**: Create your Hunter account.
-2. **Forge**: Start building your resume in the interactive builder.
-3. **Analyze**: Use the AI engine to get an ATS score and optimization tips.
-4. **Export**: Download your high-impact, machine-readable resume.
-5. **Level Up**: Watch your score improve as you refine your content.
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-Built with ❤️ for Hunters by **ResumeForge AI Team**.
+## 📝 License
+MIT License

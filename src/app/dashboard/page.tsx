@@ -27,13 +27,11 @@ export default async function DashboardPage() {
             <div className="relative w-8 h-8 overflow-hidden rounded-lg bg-primary/10 flex items-center justify-center border border-primary/20 group-hover:border-primary/40 transition-colors">
               <img 
                 src="/logo.png" 
-                alt="ResumeForge AI Logo" 
+                alt="Prism Logo" 
                 className="w-full h-full object-cover"
               />
             </div>
-            <span className="text-xl font-bold tracking-tighter text-primary">
-              ResumeForge AI
-            </span>
+              PRISM ATS BUILDER
           </Link>
           <div className="flex items-center gap-4">
             <div className="flex flex-col items-end mr-2">

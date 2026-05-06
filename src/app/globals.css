@@ -3,24 +3,27 @@
 @theme {
   --font-sans: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
   
-  --color-background: oklch(0.98 0.01 240);
-  --color-foreground: oklch(0.15 0.02 240);
+  /* Dark base for the Prism theme */
+  --color-background: oklch(0.1 0.02 260);
+  --color-foreground: oklch(0.95 0.01 240);
   
-  --color-primary: oklch(0.55 0.15 250);
-  --color-primary-foreground: oklch(0.98 0.01 240);
+  /* Iridescent cyan-purple primary */
+  --color-primary: oklch(0.72 0.2 200);
+  --color-primary-foreground: oklch(0.1 0.02 260);
   
-  --color-secondary: oklch(0.92 0.02 240);
-  --color-secondary-foreground: oklch(0.2 0.03 240);
+  --color-secondary: oklch(0.18 0.03 260);
+  --color-secondary-foreground: oklch(0.85 0.02 240);
   
-  --color-accent: oklch(0.7 0.2 300);
+  /* Magenta accent for the prism spectrum */
+  --color-accent: oklch(0.68 0.25 310);
   --color-accent-foreground: oklch(0.98 0.01 240);
   
-  --color-muted: oklch(0.95 0.01 240);
-  --color-muted-foreground: oklch(0.45 0.02 240);
+  --color-muted: oklch(0.16 0.02 260);
+  --color-muted-foreground: oklch(0.55 0.04 240);
   
-  --color-border: oklch(0.9 0.01 240);
-  --color-input: oklch(0.9 0.01 240);
-  --color-ring: oklch(0.55 0.15 250);
+  --color-border: oklch(0.22 0.03 260);
+  --color-input: oklch(0.22 0.03 260);
+  --color-ring: oklch(0.72 0.2 200);
 }
 
 @layer base {
@@ -33,17 +36,43 @@
 }
 
 .glass {
-  @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-xl;
+  @apply bg-white/5 backdrop-blur-md border border-white/10 shadow-xl;
 }
 
 .card-hover {
   @apply transition-all duration-300 hover:shadow-2xl hover:-translate-y-1;
 }
 
+/* Prism iridescent gradient: cyan → purple → magenta */
+.prism-gradient {
+  background: linear-gradient(135deg, 
+    oklch(0.72 0.2 200),   /* cyan */
+    oklch(0.6 0.25 280),   /* purple */
+    oklch(0.68 0.25 310)   /* magenta */
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.prism-border {
+  border-image: linear-gradient(135deg, 
+    oklch(0.72 0.2 200),
+    oklch(0.6 0.25 280),
+    oklch(0.68 0.25 310)
+  ) 1;
+}
+
 @keyframes gradient {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
+}
+
+@keyframes prism-shift {
+  0%   { filter: hue-rotate(0deg); }
+  50%  { filter: hue-rotate(30deg); }
+  100% { filter: hue-rotate(0deg); }
 }
 
 @keyframes float {
@@ -57,6 +86,10 @@
   animation: gradient 8s ease infinite;
 }
 
+.animate-prism {
+  animation: prism-shift 6s ease-in-out infinite;
+}
+
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }
@@ -64,11 +97,11 @@
 .bg-grid {
   background-size: 50px 50px;
   background-image: 
-    linear-gradient(to right, oklch(0.5 0.1 250 / 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, oklch(0.5 0.1 250 / 0.03) 1px, transparent 1px);
+    linear-gradient(to right, oklch(0.72 0.2 200 / 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, oklch(0.72 0.2 200 / 0.04) 1px, transparent 1px);
   mask-image: radial-gradient(ellipse at center, black 40%, transparent 100%);
 }
 
 .text-glow {
-  text-shadow: 0 0 20px rgba(var(--color-primary), 0.3);
+  text-shadow: 0 0 30px oklch(0.72 0.2 200 / 0.5);
 }

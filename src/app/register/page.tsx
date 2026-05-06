@@ -64,12 +64,12 @@ export default function RegisterPage() {
             <div className="relative w-16 h-16 overflow-hidden rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20 group-hover:border-primary/40 transition-colors">
               <img 
                 src="/logo.png" 
-                alt="ResumeForge AI Logo" 
+                alt="Prism Logo" 
                 className="w-full h-full object-cover"
               />
             </div>
             <span className="text-2xl font-black italic text-primary tracking-tighter inline-block">
-              RESUMEFORGE AI
+              PRISM ATS BUILDER
             </span>
           </Link>
           <h1 className="text-3xl font-bold tracking-tight">Begin Your Quest</h1>
