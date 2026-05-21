@@ -8,7 +8,6 @@ import bcrypt from "bcryptjs"
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma) as unknown as import("next-auth/adapters").Adapter,
-  trustHost: true,
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_ID || "",
