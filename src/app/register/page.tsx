@@ -152,11 +152,19 @@ export default function RegisterPage() {
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            <button className="flex items-center justify-center gap-2 py-3 bg-secondary text-secondary-foreground rounded-xl hover:bg-muted transition-all border border-border/50">
+            <button 
+              type="button"
+              onClick={() => signIn('github', { callbackUrl: '/dashboard' })}
+              className="flex items-center justify-center gap-2 py-3 bg-secondary text-secondary-foreground rounded-xl hover:bg-muted transition-all border border-border/50"
+            >
               <GithubIcon className="w-5 h-5" />
               Github
             </button>
-            <button className="flex items-center justify-center gap-2 py-3 bg-secondary text-secondary-foreground rounded-xl hover:bg-muted transition-all border border-border/50">
+            <button 
+              type="button"
+              onClick={() => signIn('google', { callbackUrl: '/dashboard' })}
+              className="flex items-center justify-center gap-2 py-3 bg-secondary text-secondary-foreground rounded-xl hover:bg-muted transition-all border border-border/50"
+            >
               <UserPlus className="w-5 h-5" />
               Google
             </button>
