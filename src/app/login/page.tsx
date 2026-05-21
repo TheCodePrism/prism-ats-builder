@@ -147,6 +147,7 @@ export default function LoginPage() {
 
           <div className="grid grid-cols-2 gap-4">
             <button 
+              type="button"
               onClick={() => handleSocialLogin('github')}
               className="flex items-center justify-center gap-2 py-3 bg-secondary text-secondary-foreground rounded-xl hover:bg-muted transition-all border border-border/50"
             >
@@ -154,6 +155,7 @@ export default function LoginPage() {
               Github
             </button>
             <button 
+              type="button"
               onClick={() => handleSocialLogin('google')}
               className="flex items-center justify-center gap-2 py-3 bg-secondary text-secondary-foreground rounded-xl hover:bg-muted transition-all border border-border/50"
             >
