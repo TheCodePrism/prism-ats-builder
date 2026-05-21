@@ -8,6 +8,7 @@ import DeleteButton from '@/components/dashboard/DeleteButton'
 import AISettings from '@/components/dashboard/AISettings'
 import { getUserSettings } from '@/app/actions/user'
 import Image from 'next/image'
+import LogoutButton from '@/components/dashboard/LogoutButton'
 
 export default async function DashboardPage() {
   const session = await getServerSession(authOptions)
@@ -48,6 +49,7 @@ export default async function DashboardPage() {
                 {session.user.name?.charAt(0)}
               </div>
             )}
+            <LogoutButton />
           </div>
         </div>
       </header>
