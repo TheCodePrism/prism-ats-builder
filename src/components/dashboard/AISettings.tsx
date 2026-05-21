@@ -6,10 +6,10 @@ import { Sparkles, Key, Save, Loader2, Info } from 'lucide-react'
 import { updateUserApiKey } from '@/app/actions/user'
 import { toast } from 'sonner'
 
-export default function AISettings({ initialKey, initialUsage }: { initialKey: string | null, initialUsage: number }) {
+export default function AISettings({ initialKey, initialUsage, hasPlatformKey = true }: { initialKey: string | null, initialUsage: number, hasPlatformKey?: boolean }) {
   const [apiKey, setApiKey] = useState(initialKey || '')
   const [isSaving, setIsSaving] = useState(false)
-  const [useCustom, setUseCustom] = useState(!!initialKey)
+  const [useCustom, setUseCustom] = useState(!!initialKey || !hasPlatformKey)
 
   const USER_LIMIT = 20
   const progress = (initialUsage / USER_LIMIT) * 100
@@ -43,7 +43,7 @@ export default function AISettings({ initialKey, initialUsage }: { initialKey: s
         </div>
 
         {/* Usage Progress */}
-        {!useCustom && (
+        {!useCustom && hasPlatformKey && (
           <div className="mb-8 p-4 rounded-2xl bg-primary/5 border border-primary/10">
             <div className="flex justify-between items-end mb-2">
               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary">Free Tokens</span>
@@ -62,16 +62,19 @@ export default function AISettings({ initialKey, initialUsage }: { initialKey: s
 
         <div className="space-y-6">
           <div className="flex flex-col gap-4">
-            <label className="flex items-center gap-3 p-4 rounded-2xl border border-border bg-background/50 cursor-pointer hover:border-primary/30 transition-all">
+            <label className={`flex items-center gap-3 p-4 rounded-2xl border border-border bg-background/50 transition-all ${hasPlatformKey ? 'cursor-pointer hover:border-primary/30' : 'opacity-50 cursor-not-allowed'}`}>
               <input 
                 type="radio" 
-                checked={!useCustom} 
-                onChange={() => setUseCustom(false)}
+                checked={!useCustom && hasPlatformKey} 
+                onChange={() => hasPlatformKey && setUseCustom(false)}
+                disabled={!hasPlatformKey}
                 className="w-4 h-4 accent-primary"
               />
               <div className="flex-1">
                 <p className="text-sm font-bold">Base Model (GPT-4o Mini)</p>
-                <p className="text-[10px] text-muted-foreground">Standard optimization using free credits.</p>
+                <p className="text-[10px] text-muted-foreground">
+                  {hasPlatformKey ? 'Standard optimization using free credits.' : 'Currently unavailable on this platform. Add API Key below.'}
+                </p>
               </div>
             </label>
 

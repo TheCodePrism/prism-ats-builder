@@ -77,7 +77,11 @@ export default async function DashboardPage() {
             </div>
           </div>
           <div className="lg:col-span-1">
-            <AISettings initialKey={userSettings?.openaiKey || null} initialUsage={userSettings?.aiUsage || 0} />
+            <AISettings 
+              initialKey={userSettings?.openaiKey || null} 
+              initialUsage={userSettings?.aiUsage || 0} 
+              hasPlatformKey={!!process.env.OPENAI_API_KEY}
+            />
           </div>
         </div>
 
