@@ -210,6 +210,13 @@ export async function parseResumeFileAction(formData: FormData) {
     const arrayBuffer = await file.arrayBuffer()
     const buffer = Buffer.from(arrayBuffer)
 
+    // Polyfill DOMMatrix for newer Node/Vercel environments where pdf-parse fails
+    if (typeof global.DOMMatrix === 'undefined') {
+      (global as any).DOMMatrix = class DOMMatrix {
+        constructor() {}
+      }
+    }
+
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     const pdfParse = require('pdf-parse')
     const parsedPdf = await pdfParse(buffer)
