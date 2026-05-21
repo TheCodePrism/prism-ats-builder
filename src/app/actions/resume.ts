@@ -14,6 +14,7 @@ export interface Resume {
   updatedAt: Date
 }
 import { resumeDataSchema } from '@/lib/validations'
+import { ZodError } from 'zod'
 
 export async function saveResume(userId: string, data: ResumeData, resumeId?: string) {
   try {
@@ -50,10 +51,10 @@ export async function saveResume(userId: string, data: ResumeData, resumeId?: st
     revalidatePath('/dashboard')
     revalidatePath('/builder')
     return { success: true, resume }
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error saving resume:', error)
-    if (error.name === 'ZodError') {
-      return { success: false, error: 'Invalid data: ' + error.errors[0].message }
+    if (error instanceof ZodError) {
+      return { success: false, error: 'Invalid data: ' + error.issues[0].message }
     }
     return { success: false, error: 'Failed to save resume' }
   }
@@ -91,7 +92,7 @@ export async function deleteResume(id: string) {
     })
     revalidatePath('/dashboard')
     return { success: true }
-  } catch (error) {
+  } catch {
     return { success: false }
   }
 }

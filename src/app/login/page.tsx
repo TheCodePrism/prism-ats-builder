@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 
 const GithubIcon = ({ className }: { className?: string }) => (
   <svg
@@ -70,9 +71,11 @@ export default function LoginPage() {
         <div className="text-center mb-10">
           <Link href="/" className="flex flex-col items-center gap-4 group mb-6">
             <div className="relative w-16 h-16 overflow-hidden rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20 group-hover:border-primary/40 transition-colors">
-              <img 
+              <Image 
                 src="/logo.png" 
                 alt="Prism Logo" 
+                width={64}
+                height={64}
                 className="w-full h-full object-cover"
               />
             </div>
@@ -160,7 +163,7 @@ export default function LoginPage() {
           </div>
 
           <p className="mt-8 text-sm text-muted-foreground">
-            Don't have an account?{' '}
+            Don&apos;t have an account?{' '}
             <Link href="/register" className="text-primary font-bold hover:underline">
               Register now
             </Link>

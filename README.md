@@ -9,6 +9,7 @@ Prism ATS Builder is an open-source, AI-powered resume builder designed to help 
 ## ✨ Core Features
 - **ATS Scoring Engine**: Get real-time feedback on how recruiter algorithms read your resume. 
 - **AI Bullet Optimization**: Rewrite your impact statements using the "Platform AI" (GPT-4o Mini) or your own API key (GPT-4o).
+- **AI Resume Importer**: Upload your existing PDF or paste raw text. The AI will instantly parse and extract your work history, education, and skills. (Includes a robust heuristic Regex fallback when AI is unavailable).
 - **Gamified Leveling**: Gain XP and level up your profile from Bronze to S-Rank.
 - **Dynamic PDF Export**: Export pixel-perfect resumes instantly using `@react-pdf/renderer`.
 - **Bring Your Own AI (BYOAI)**: Free users get quota-limited access to the platform AI, but you can unlock unlimited S-Rank optimizations by bringing your own OpenAI API key.

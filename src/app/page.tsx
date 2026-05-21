@@ -1,8 +1,9 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { FileText, Zap, Target, Star, ChevronRight } from 'lucide-react'
+import { Zap, Target, Star, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function Home() {
   return (
@@ -12,9 +13,11 @@ export default function Home() {
         <div className="container mx-auto flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 group">
             <div className="relative w-10 h-10 overflow-hidden rounded-xl bg-primary/10 flex items-center justify-center border border-primary/20 group-hover:border-primary/40 transition-colors">
-              <img 
+              <Image 
                 src="/logo.png" 
                 alt="Prism Logo" 
+                width={40}
+                height={40}
                 className="w-full h-full object-cover"
               />
             </div>

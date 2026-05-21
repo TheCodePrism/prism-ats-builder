@@ -1,4 +1,5 @@
 import OpenAI from 'openai'
+import { ResumeData } from '@/store/useResumeStore'
 
 // Helper to get OpenAI instance
 const getOpenAI = (userApiKey?: string) => {
@@ -51,7 +52,7 @@ export async function optimizeResumeContent(
   return response.choices[0].message.content
 }
 
-export async function analyzeResumeAI(resumeData: any, jobDescription: string, userApiKey?: string) {
+export async function analyzeResumeAI(resumeData: ResumeData, jobDescription: string, userApiKey?: string) {
   const openai = getOpenAI(userApiKey)
 
   const prompt = `
@@ -76,6 +77,66 @@ export async function analyzeResumeAI(resumeData: any, jobDescription: string, u
       { role: 'system', content: 'You are an elite recruiter specializing in semantic resume analysis. Return JSON only.' },
       { role: 'user', content: prompt }
     ],
+  })
+
+  return JSON.parse(response.choices[0].message.content || '{}')
+}
+
+export async function parseResumeWithAI(resumeText: string, userApiKey?: string) {
+  const openai = getOpenAI(userApiKey)
+
+  const prompt = `
+    Analyze this raw resume text and extract all relevant information to fit the structured schema.
+    
+    Raw Resume Text:
+    ${resumeText}
+    
+    Return a JSON object matching this schema:
+    {
+      "personalInfo": {
+        "fullName": "Full Name",
+        "email": "Email Address",
+        "phone": "Phone Number",
+        "location": "Location (City, State / Country)",
+        "website": "Personal Website or LinkedIn URL",
+        "summary": "Professional Summary / Objective"
+      },
+      "experience": [
+        {
+          "company": "Company Name",
+          "role": "Job Title / Role",
+          "location": "Job Location",
+          "startDate": "Start Date",
+          "endDate": "End Date (or 'Present')",
+          "description": "Clean, structured description of responsibilities and achievements"
+        }
+      ],
+      "education": [
+        {
+          "school": "School / University Name",
+          "degree": "Degree / Field of Study",
+          "location": "School Location",
+          "startDate": "Start Date",
+          "endDate": "End Date"
+        }
+      ],
+      "skills": ["Skill 1", "Skill 2"]
+    }
+
+    Rules:
+    1. Fill as many fields as possible from the provided text.
+    2. If a field is not found in the text, leave it empty or omit it.
+    3. Make sure the output is strict JSON. Return ONLY the JSON object. No markdown, no comments.
+  `
+
+  const response = await openai.chat.completions.create({
+    model: userApiKey ? 'gpt-4o' : 'gpt-4o-mini',
+    response_format: { type: 'json_object' },
+    messages: [
+      { role: 'system', content: 'You are an elite parser that extracts resume details into structured JSON format. Output JSON only.' },
+      { role: 'user', content: prompt }
+    ],
+    temperature: 0.2,
   })
 
   return JSON.parse(response.choices[0].message.content || '{}')

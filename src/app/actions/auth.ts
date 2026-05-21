@@ -37,7 +37,7 @@ export async function registerAction(formData: FormData) {
     })
 
     return { success: true, user: { id: user.id, email: user.email, name: user.name } }
-  } catch (error: any) {
+  } catch (error) {
     if (error instanceof z.ZodError) {
       return { success: false, error: error.issues[0].message }
     }

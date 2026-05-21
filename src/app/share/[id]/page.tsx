@@ -2,8 +2,9 @@ import { getPublicResume } from '@/app/actions/share'
 import ResumePreviewWrapper from '@/components/share/ResumePreviewWrapper'
 import { notFound } from 'next/navigation'
 
-export default async function PublicResumePage({ params }: { params: { id: string } }) {
-  const resume = await getPublicResume(params.id)
+export default async function PublicResumePage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+  const resume = await getPublicResume(id)
 
   if (!resume) {
     notFound()

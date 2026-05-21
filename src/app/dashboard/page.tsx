@@ -7,6 +7,7 @@ import { redirect } from 'next/navigation'
 import DeleteButton from '@/components/dashboard/DeleteButton'
 import AISettings from '@/components/dashboard/AISettings'
 import { getUserSettings } from '@/app/actions/user'
+import Image from 'next/image'
 
 export default async function DashboardPage() {
   const session = await getServerSession(authOptions)
@@ -25,9 +26,11 @@ export default async function DashboardPage() {
         <div className="container mx-auto flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 group">
             <div className="relative w-8 h-8 overflow-hidden rounded-lg bg-primary/10 flex items-center justify-center border border-primary/20 group-hover:border-primary/40 transition-colors">
-              <img 
+              <Image 
                 src="/logo.png" 
                 alt="Prism Logo" 
+                width={32}
+                height={32}
                 className="w-full h-full object-cover"
               />
             </div>
@@ -39,7 +42,7 @@ export default async function DashboardPage() {
               <span className="text-[10px] text-muted-foreground uppercase tracking-widest">Active Hunter</span>
             </div>
             {session.user.image ? (
-              <img src={session.user.image} alt={session.user.name || ''} className="w-8 h-8 rounded-full border border-primary/20" />
+              <Image src={session.user.image} alt={session.user.name || ''} width={32} height={32} className="w-8 h-8 rounded-full border border-primary/20 object-cover" />
             ) : (
               <div className="w-8 h-8 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-xs font-bold text-primary">
                 {session.user.name?.charAt(0)}

@@ -12,7 +12,7 @@ export async function toggleResumePublic(id: string, isPublic: boolean) {
     revalidatePath('/dashboard')
     revalidatePath(`/share/${id}`)
     return { success: true }
-  } catch (error) {
+  } catch {
     return { success: false }
   }
 }
@@ -23,7 +23,7 @@ export async function getPublicResume(id: string) {
       where: { id, isPublic: true },
     })
     return resume
-  } catch (error) {
+  } catch {
     return null
   }
 }

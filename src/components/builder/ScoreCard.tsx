@@ -3,16 +3,22 @@
 import { useResumeStore } from '@/store/useResumeStore'
 import { calculateATSScore } from '@/lib/ats-engine'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Trophy, AlertCircle, CheckCircle2, Sparkles, Loader2, ListChecks, Lightbulb } from 'lucide-react'
+import { AlertCircle, CheckCircle2, Sparkles, Loader2, ListChecks, Lightbulb } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { analyzeResumeAction } from '@/app/actions/ai'
 import LevelSystem from './LevelSystem'
 import { toast } from 'sonner'
 
+interface AIAnalysisResult {
+  successCriteria: string[]
+  suggestions: string[]
+  impactScore: number
+}
+
 export default function ScoreCard() {
   const { data, setAtsScore } = useResumeStore()
   const [isAnalyzing, setIsAnalyzing] = useState(false)
-  const [aiResult, setAiResult] = useState<any>(null)
+  const [aiResult, setAiResult] = useState<AIAnalysisResult | null>(null)
   
   const results = useMemo(() => {
     return calculateATSScore(data, data.jobDescription)

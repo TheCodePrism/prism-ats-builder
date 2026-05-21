@@ -3,7 +3,7 @@
 import ResumeForm from '@/components/builder/ResumeForm'
 import ResumePreview from '@/components/builder/ResumePreview'
 import ScoreCard from '@/components/builder/ScoreCard'
-import { Download, ChevronLeft, Target, Save, Check, Layout, Rocket, Palette } from 'lucide-react'
+import { Download, ChevronLeft, Target, Save, Check, Layout, Rocket, Palette, Sparkles } from 'lucide-react'
 import Link from 'next/link'
 import { useResumeStore } from '@/store/useResumeStore'
 import { PDFDownloadLink } from '@react-pdf/renderer'
@@ -13,6 +13,7 @@ import { saveResume, getResumeById } from '@/app/actions/resume'
 import { useSearchParams } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import OnboardingModal from '@/components/builder/OnboardingModal'
+import ImportResumeModal from '@/components/builder/ImportResumeModal'
 import ThemeCustomizer from '@/components/builder/ThemeCustomizer'
 import { toast } from 'sonner'
 import AIUsageBadge from '@/components/builder/AIUsageBadge'
@@ -24,7 +25,8 @@ export default function BuilderPage() {
   const [showJD, setShowJD] = useState(false)
   const [showTemplates, setShowTemplates] = useState(false)
   const [showOnboarding, setShowOnboarding] = useState(false)
-  const [isPending, startTransition] = useTransition()
+  const [showImport, setShowImport] = useState(false)
+  const [, startTransition] = useTransition()
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
   const searchParams = useSearchParams()
   const resumeId = searchParams.get('id')
@@ -40,12 +42,12 @@ export default function BuilderPage() {
       loadResume()
     } else {
       resetResume()
-      setShowOnboarding(true)
+      setTimeout(() => setShowOnboarding(true), 0)
     }
   }, [resumeId, setResumeData, resetResume])
 
   useEffect(() => {
-    setIsMounted(true)
+    setTimeout(() => setIsMounted(true), 0)
   }, [])
 
   const handleSave = () => {
@@ -71,7 +73,8 @@ export default function BuilderPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <OnboardingModal isOpen={showOnboarding} onClose={() => setShowOnboarding(false)} />
+      <OnboardingModal isOpen={showOnboarding} onClose={() => setShowOnboarding(false)} onImport={() => setShowImport(true)} />
+      <ImportResumeModal isOpen={showImport} onClose={() => setShowImport(false)} />
       
       {/* Top Header */}
       <header className="sticky top-0 z-50 glass border-b border-border px-6 py-4">
@@ -86,6 +89,14 @@ export default function BuilderPage() {
             </h1>
           </div>
           <div className="flex items-center gap-3">
+            <button 
+              onClick={() => setShowImport(true)}
+              className="p-2 hover:bg-muted rounded-lg text-primary transition-all flex items-center gap-2 text-sm font-bold"
+            >
+              <Sparkles className="w-4 h-4 animate-pulse" />
+              <span className="hidden md:inline">Import Resume</span>
+            </button>
+            
             <button 
               onClick={() => setShowOnboarding(true)}
               className="p-2 hover:bg-muted rounded-lg text-primary transition-all flex items-center gap-2 text-sm font-bold"

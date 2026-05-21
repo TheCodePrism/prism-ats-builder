@@ -1,7 +1,7 @@
 'use client'
 
 import { useResumeStore } from '@/store/useResumeStore'
-import { Type, Palette, Type as FontIcon, Layout } from 'lucide-react'
+import { Type, Palette, Type as FontIcon } from 'lucide-react'
 
 export default function ThemeCustomizer() {
   const { data, updateSettings } = useResumeStore()

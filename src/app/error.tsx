@@ -26,7 +26,7 @@ export default function Error({
 
         <h1 className="text-3xl font-black italic mb-4 uppercase tracking-tight">System Glitch</h1>
         <p className="text-muted-foreground mb-8">
-          The forge has encountered an unexpected error. Don't worry, your progress is likely safe.
+          The forge has encountered an unexpected error. Don&apos;t worry, your progress is likely safe.
         </p>
 
         <div className="flex flex-col gap-3">

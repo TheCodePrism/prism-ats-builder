@@ -19,7 +19,7 @@ export async function updateUserApiKey(apiKey: string | null) {
 
     revalidatePath('/dashboard')
     return { success: true }
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error updating API key:', error)
     return { success: false, error: 'Failed to update API key' }
   }

@@ -7,7 +7,7 @@ import CredentialsProvider from "next-auth/providers/credentials"
 import bcrypt from "bcryptjs"
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(prisma) as any,
+  adapter: PrismaAdapter(prisma) as unknown as import("next-auth/adapters").Adapter,
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_ID!,
@@ -45,15 +45,15 @@ export const authOptions: NextAuthOptions = {
     })
   ],
   callbacks: {
-    jwt: async ({ token, user }: any) => {
+    jwt: async ({ token, user }) => {
       if (user) {
         token.id = user.id
       }
       return token
     },
-    session: async ({ session, token }: any) => {
+    session: async ({ session, token }) => {
       if (session.user) {
-        session.user.id = token.id as string
+        (session.user as { id?: string }).id = token.id as string
       }
       return session
     },

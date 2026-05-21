@@ -99,7 +99,7 @@ function ClassicTemplate({ data }: { data: ResumeData }) {
 }
 
 function ModernTemplate({ data }: { data: ResumeData }) {
-  const { personalInfo, experience, education, skills } = data
+  const { personalInfo, experience, skills } = data
   return (
     <div className="bg-white text-slate-900 shadow-2xl rounded-sm aspect-[1/1.41] flex overflow-hidden font-[family-name:var(--font-family)]" style={{ fontSize: 'var(--font-size)' }}>
       {/* Sidebar */}
@@ -130,7 +130,7 @@ function ModernTemplate({ data }: { data: ResumeData }) {
         {personalInfo.summary && (
           <section className="mb-8">
             <h2 className="text-[0.8em] font-bold uppercase tracking-widest mb-3" style={{ color: 'var(--primary-color)' }}>About Me</h2>
-            <p className="text-[0.85em] leading-relaxed text-slate-600 italic">"{personalInfo.summary}"</p>
+            <p className="text-[0.85em] leading-relaxed text-slate-600 italic">&quot;{personalInfo.summary}&quot;</p>
           </section>
         )}
 

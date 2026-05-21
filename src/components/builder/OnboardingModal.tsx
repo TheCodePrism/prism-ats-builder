@@ -2,10 +2,10 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Target, Layout, Rocket, ChevronRight, X } from 'lucide-react'
+import { Target, Layout, Rocket, ChevronRight, X, Sparkles } from 'lucide-react'
 import { useResumeStore } from '@/store/useResumeStore'
 
-export default function OnboardingModal({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) {
+export default function OnboardingModal({ isOpen, onClose, onImport }: { isOpen: boolean, onClose: () => void, onImport?: () => void }) {
   const [step, setStep] = useState(1)
   const { data, updateJobDescription, setTemplate } = useResumeStore()
 
@@ -53,6 +53,22 @@ export default function OnboardingModal({ isOpen, onClose }: { isOpen: boolean, 
               <button onClick={nextStep} className="w-full py-4 bg-primary text-primary-foreground font-bold rounded-xl flex items-center justify-center gap-2 group">
                 CONTINUE <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
+
+              {onImport && (
+                <>
+                  <div className="relative flex py-2 items-center">
+                    <div className="flex-grow border-t border-border"></div>
+                    <span className="flex-shrink mx-4 text-xs text-muted-foreground font-bold uppercase tracking-widest">Or</span>
+                    <div className="flex-grow border-t border-border"></div>
+                  </div>
+                  <button 
+                    onClick={() => { onClose(); onImport(); }}
+                    className="w-full py-4 bg-background border border-primary/30 hover:border-primary text-primary font-bold rounded-xl flex items-center justify-center gap-2 transition-all group"
+                  >
+                    IMPORT EXISTING RESUME <Sparkles className="w-4 h-4 text-primary animate-pulse" />
+                  </button>
+                </>
+              )}
             </motion.div>
           )}
 
